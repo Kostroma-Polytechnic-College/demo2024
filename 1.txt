@@ -1,0 +1,76 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace mycode
+{
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+
+            Double totalCost = Calculate(Console.ReadLine());
+            Console.WriteLine($"{totalCost:F0}");
+            Console.ReadLine();
+        }
+
+        public static double Calculate(string input)
+        {
+            string[] inputParts = input.Split(' ');
+
+            if (inputParts.Length != 4)
+            {
+                Console.WriteLine("Неверный формат ввода.");
+                return Double.NaN;
+            }
+
+            string visitorType = inputParts[0];
+            int previousVisits = int.Parse(inputParts[1]);
+            double ticketPrice = double.Parse(inputParts[2]);
+            int ticketsToBuy = int.Parse(inputParts[3]);
+
+            double totalCost = 0;
+
+            switch (visitorType.ToLower())
+            {
+                case "viewer":
+                    totalCost = ticketPrice * ticketsToBuy;
+                    break;
+                case "regular":
+                    int totalTicketsPurchased = previousVisits + ticketsToBuy;
+                    int ticketArice =(int)ticketPrice;
+                    int totalDiscount = 0;
+                    for (int ticketNumber = previousVisits; ticketNumber <= totalTicketsPurchased; ticketNumber++)
+                    {
+                        int discountPercentage = Math.Min((ticketNumber - totalTicketsPurchased) / 10, 20);
+                        int discountedPrice = ticketArice * (1 - discountPercentage / 100);
+                        totalDiscount += ticketArice - discountedPrice;
+                    }
+                    totalCost = ticketArice * totalTicketsPurchased - totalDiscount;
+                    break;
+                case "student":
+                    int visitsBefore = previousVisits / 3;
+                    int visitsAfter = (previousVisits + ticketsToBuy) / 3;
+                    int visitsDiff = visitsAfter - visitsBefore;
+                    int cell = ticketsToBuy - visitsDiff;
+                    totalCost = (cell * ticketPrice) + ((ticketPrice * visitsDiff) / 2);
+
+                    break;
+                case "pensioner":
+                    int ticketOff = (int)ticketPrice / 2;
+                    int visitsDefore = previousVisits / 5;
+                    int visitsDafter = (previousVisits + ticketsToBuy)/5;
+                    int VisitsDift = visitsDafter - visitsDefore;
+                    int dell = ticketsToBuy - VisitsDift;
+                    totalCost = (dell * ticketOff);
+                    break;
+                default:
+                    Console.WriteLine("Неверный тип посетителя");
+                    return Double.NaN;
+            }
+            return totalCost;
+        }
+    }
+}
