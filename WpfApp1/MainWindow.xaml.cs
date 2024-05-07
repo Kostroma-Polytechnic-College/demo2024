@@ -24,5 +24,18 @@ namespace WpfApp1
         {
             InitializeComponent();
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show(
+                "Сохранить изменения в БД?",
+                "Сохранение",
+                MessageBoxButton.YesNo);
+            
+            if (result == MessageBoxResult.Yes)
+            {
+                Singleton.DB.SaveChanges();
+            }
+        }
     }
 }
