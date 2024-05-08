@@ -30,6 +30,7 @@ namespace WpfApp1.Pages
             User user = Singleton.DB.User.FirstOrDefault(u =>
                 u.Username == username.Text
                 && u.Password == password.Password);
+            
             if (user == null)
             {
                 MessageBox.Show("нельзя сотварить здесь");
@@ -37,8 +38,25 @@ namespace WpfApp1.Pages
             else
             {
                 MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
-                mainWindow.frame.Navigate(new Test());
+                if (user.Role_ID == 1)
+                {
+                    mainWindow.frame.Navigate(new Test());
+                }
+                else if (user.Role_ID == 2)
+                {
+                    mainWindow.frame.Navigate(new Test2());
+                }
+                else
+                {
+                    MessageBox.Show("Неизвестная роль");
+                }
             }
+        }
+
+        private void registration_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
+            mainWindow.frame.Navigate(new Registration());
         }
     }
 }

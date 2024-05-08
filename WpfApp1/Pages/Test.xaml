@@ -10,8 +10,13 @@
 
     <Grid>
         <DockPanel>
-            <Button DockPanel.Dock="Top" Content="Выход" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-            <DataGrid x:Name="table"/>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <Button  Content="Выход" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click"/>
+                <Label Content="Фильтр"/>
+                <TextBox x:Name="filter" Width="300" TextChanged="TextBox_TextChanged"/>
+            </StackPanel>
+            <DataGrid x:Name="table" Width="600"/>
+            <Button DockPanel.Dock="Right" x:Name="edit" Content="Изменить" Width="100" Height="30" Click="edit_Click"/>
         </DockPanel>
     </Grid>
 </Page>
